@@ -7,7 +7,7 @@ import images from "./images.json"
 
 class App extends Component {
     state = { 
-    images,
+    images, 
     score: 0,
     highscore: 0,
     navText: "Click an image to start!"
