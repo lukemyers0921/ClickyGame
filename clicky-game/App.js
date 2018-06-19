@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Jumbotron from "./components/Jumbotron";
 import Game from "./components/Game";
-import images from "./components/images/images.js"
+import images from "./images.json"
 
 class App extends Component {
     state = { 
@@ -14,22 +14,21 @@ class App extends Component {
     }
     handleClick = alt => {
       const index = images.findIndex(image => image.alt === alt)
+      console.log(index);
       if(this.state.images[index].clicked){
         this.setState({score:0,navText: "Wrong!"})
-        this.shuffle()
         for(let i = 0; i < this.state.images.length; i++){
           let image = Object.assign(this.state.images)
           image[i].clicked = false
           this.setState({image})
         }
-      
       } else {
         const newScore = this.state.score + 1
         this.setState({score:newScore,navText: "Correct!"})
+
         let image = Object.assign(this.state.images)
         image[index].clicked = true
         this.setState({image})
-        this.shuffle()
         if(newScore > this.state.highscore) {
           this.setState({highscore:newScore})
         }
@@ -44,8 +43,6 @@ class App extends Component {
         <div>
           <Navbar navText = {this.state.navText} score = {this.state.score} highscore = {this.state.highscore}/>
           <Jumbotron />
-          <div className = "container" >
-          <div className = "row" id ="imageHolder">
           {this.state.images.map(image => (
           <Game 
           onClick = {this.handleClick} 
@@ -53,8 +50,6 @@ class App extends Component {
           src = {image.src}
           />
           ))}
-          </div>
-          </div>
           <Footer />
         </div>
       )
